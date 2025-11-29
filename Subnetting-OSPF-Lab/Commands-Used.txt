@@ -1,0 +1,40 @@
+# Basic setup
+enable
+configure terminal
+hostname <name>
+
+# Interface Configuration
+interface gigabitEthernet0/0/0
+ ip address <ip> <mask>
+ no shutdown
+exit
+
+interface serial0/1/0
+ ip address <ip> <mask>
+ clock rate 64000       # only if DCE side
+ no shutdown
+exit
+
+# Verify interfaces
+show ip interface brief
+show interfaces
+show controllers serial 0/1/0
+show running-config
+
+# Routing - OSPF
+router ospf 1
+ network <network> <wildcard> area 0
+exit
+
+show ip ospf neighbor
+show ip route
+show ip protocols
+
+# DHCP Troubleshooting
+ipconfig /renew        # in PC command prompt
+show arp
+
+# Saving configuration
+end
+write
+copy running-config startup-config
